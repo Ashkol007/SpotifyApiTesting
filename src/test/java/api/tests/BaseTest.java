@@ -22,6 +22,7 @@ public class BaseTest {
                     .post(Routes.getTokenUrl);
 
             accessToken = response.jsonPath().getString("access_token");
+           
             System.out.println("Access Token: " + accessToken);
 
             int expiresIn = response.jsonPath().getInt("expires_in"); // usually 3600 sec
