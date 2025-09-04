@@ -21,5 +21,18 @@ public class AlbumsEndpoints {
 		
 	}
 	
+     public static Response getSeveralAlbums(String accessToken,String albumIds) {
+		
+		
+		Response response = given()
+				            .header("Authorization","Bearer " + accessToken)
+		                    .queryParam("ids", albumIds)
+		                    .when()
+		                    .get(Routes.getSeveralAlbums);
+				
+		return response;
+		
+	}
+	
 
 }

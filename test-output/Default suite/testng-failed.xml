@@ -5,8 +5,8 @@
     <classes>
       <class name="api.tests.AlbumsTests">
         <methods>
+          <include name="getSevevralAlbums"/>
           <include name="generateToken"/>
-          <include name="getAlbums"/>
         </methods>
       </class> <!-- api.tests.AlbumsTests -->
     </classes>

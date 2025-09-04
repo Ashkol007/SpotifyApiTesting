@@ -11,6 +11,8 @@ import static org.hamcrest.Matchers.*;
 
 public class AlbumsTests extends BaseTest {
 	
+	String accessToken = generateToken();
+	
 	
 	@Test(priority=1)
 	public void getAlbums() {
@@ -27,7 +29,6 @@ public class AlbumsTests extends BaseTest {
 	            .body("images", hasSize(greaterThan(0)))
 	            .body("images.url", everyItem(startsWith("https://")));
 		        
-		        System.out.println("upc : "+ response.body().jsonPath().getString("artists[0].external_urls"));
 		         		         
 		         Assert.assertEquals(response.statusCode(), 200);
 		         Assert.assertEquals(response.body().jsonPath().getString("album_type"), "album");
@@ -44,6 +45,30 @@ public class AlbumsTests extends BaseTest {
 		         response.then().log().all();
 		         
 		         Assert.assertEquals(response.statusCode(), 401);
+		
+	}
+	
+	@Test(priority=2)
+	public void getSevevralAlbums() {
+		
+		
+		Response response = AlbumsEndpoints.getSeveralAlbums(accessToken, "382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc");
+//		         response.then().log().all();
+		
+		         response.then()
+		         .body("albums.tracks.href",everyItem(startsWith("https://api.spotify.com/v1/albums/")));
+		         
+//		         String popularity =  response.getBody().jsonPath().getString("copyrights");
+
+		         System.out.println("albums: "+response.body().jsonPath().getString("albums[0].total_tracks"));
+		         System.out.println("artists: "+response.body().jsonPath().getString("albums[0].artists.external_urls.spotify"));
+
+		         System.out.println("artists: "+response.body().jsonPath().getString("albums[0].artists[0].name"));
+		         
+		         Assert.assertEquals(response.getStatusCode(), 200);
+		         Assert.assertEquals(response.body().jsonPath().getString("albums[0].album_type"), "album");
+		         Assert.assertEquals(response.body().jsonPath().getString("albums[0].artists[0].name"), "Daft Punk");
+		         
 		
 	}
 	
