@@ -56,7 +56,10 @@ public class AlbumsTests extends BaseTest {
 //		         response.then().log().all();
 		
 		         response.then()
-		         .body("albums.tracks.href",everyItem(startsWith("https://api.spotify.com/v1/albums/")));
+		         .body("albums.tracks.href",everyItem(startsWith("https://api.spotify.com/v1/albums/")))
+		         .body("albums[0].id", notNullValue())
+		         .body("albums[0].id", not(emptyOrNullString()))
+		         ;
 		         
 //		         String popularity =  response.getBody().jsonPath().getString("copyrights");
 
