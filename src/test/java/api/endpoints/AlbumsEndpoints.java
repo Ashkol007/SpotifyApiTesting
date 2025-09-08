@@ -33,6 +33,19 @@ public class AlbumsEndpoints {
 		return response;
 		
 	}
+     
+     public static Response getSeveralAlbums(String albumIds) {
+ 		
+ 		
+ 		Response response = given()
+ 				            .header("Authorization","Bearer ")
+ 		                    .queryParam("ids", albumIds)
+ 		                    .when()
+ 		                    .get(Routes.getSeveralAlbums);
+ 				
+ 		return response;
+ 		
+ 	} 
 	
 
 }

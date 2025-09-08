@@ -8,10 +8,12 @@ import api.endpoints.AlbumsEndpoints;
 import io.restassured.response.Response;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class AlbumsTests extends BaseTest {
 	
 	String accessToken = generateToken();
+	String severalAlbumsId = "382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc";
 	
 	
 	@Test(priority=1)
@@ -45,8 +47,10 @@ public class AlbumsTests extends BaseTest {
 		         response.then().log().all();
 		         
 		         Assert.assertEquals(response.statusCode(), 401);
-		
+		         Assert.assertEquals(response.body().jsonPath().getString("error.message"), "Invalid access token");  
 	}
+	
+//	GET Several Albums
 	
 	@Test(priority=2)
 	public void getSevevralAlbums() {
@@ -75,6 +79,62 @@ public class AlbumsTests extends BaseTest {
 		
 	}
 	
+//	Negative Tests
+	
+	@Test(priority=3)
+	public void getSevevralAlbumsWithInvalidId() {
+		
+		
+		Response response = AlbumsEndpoints.getSeveralAlbums(accessToken, "invalidid1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc");
+		         response.then().log().all();
+		         
+		         Assert.assertEquals(response.getStatusCode(), 400);
+		         Assert.assertEquals(response.body().jsonPath().getString("error.message"), "Invalid base62 id");
+		         
+		
+	}
+	
+
+	@Test(priority=3)
+	public void getSevevralAlbumsWithEmptyAuth() {
+		
+		         accessToken = "";   
+		
+		Response response = AlbumsEndpoints.getSeveralAlbums(accessToken,"382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc");
+		         response.then().log().all();
+		         
+		         Assert.assertEquals(response.getStatusCode(), 400);
+		         Assert.assertEquals(response.body().jsonPath().getString("error.message"), "Only valid bearer authentication supported");
+		         
+		
+	}
+
+	@Test(priority=3)
+	public void getSevevralAlbumsWithOutAuth(){
+		  
+		
+		Response response = AlbumsEndpoints.getSeveralAlbums("382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc");
+		         response.then().log().all();
+		         
+		         Assert.assertEquals(response.getStatusCode(), 401);
+		         Assert.assertEquals(response.body().jsonPath().getString("error.message"), "No token provided");
+		         
+		
+	}
+	
+//	@Test(priority=3)
+//	public void validateSeveralAlbumSchema() {
+//		
+//		Response response = AlbumsEndpoints.getSeveralAlbums(accessToken, severalAlbumsId);
+//		         response.then().log().all();
+//		         
+//		         response.then()
+//		         .body(matchesJsonSchemaInClasspath("schemas/severalalbums.json"));
+//		         
+//		         Assert.assertEquals(response.statusCode(), 200);
+//		         
+//		
+//	}
 	
   	
 
