@@ -12,5 +12,5 @@ public class Routes {
 	                                                       
 	public static String getAlbums = apiBaseUrl + "/albums/4aawyAB9vmqN3uQ7FjRGTy";
 	public static String getSeveralAlbums = apiBaseUrl + "/albums";
-	
+	public static String getAlbumTracks = apiBaseUrl + "/albums/{id}/tracks";	
 }

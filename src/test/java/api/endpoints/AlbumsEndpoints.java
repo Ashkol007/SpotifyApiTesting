@@ -34,11 +34,10 @@ public class AlbumsEndpoints {
 		
 	}
      
-     public static Response getSeveralAlbums(String albumIds) {
+     public static Response getSeveralAlbumsWithoutAccessToken(String albumIds) {
  		
  		
  		Response response = given()
- 				            .header("Authorization","Bearer ")
  		                    .queryParam("ids", albumIds)
  		                    .when()
  		                    .get(Routes.getSeveralAlbums);
@@ -46,6 +45,20 @@ public class AlbumsEndpoints {
  		return response;
  		
  	} 
+     
+     
+     public static Response getAlbumsTracks(String albumTracksId,String accessToken) {
+  		
+  		
+  		Response response = given()
+  				            .header("Authorization","Bearer "+ accessToken)
+  		                    .pathParam("id", albumTracksId)
+  		                    .when()
+  		                    .get(Routes.getAlbumTracks);
+  				
+  		return response;
+  		
+  	}  
 	
 
 }

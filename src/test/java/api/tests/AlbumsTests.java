@@ -14,7 +14,7 @@ public class AlbumsTests extends BaseTest {
 	
 	String accessToken = generateToken();
 	String severalAlbumsId = "382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc";
-	
+	String getAlbumTrackId = "4aawyAB9vmqN3uQ7FjRGTy";
 	
 	@Test(priority=1)
 	public void getAlbums() {
@@ -63,14 +63,13 @@ public class AlbumsTests extends BaseTest {
 		         .body("albums.tracks.href",everyItem(startsWith("https://api.spotify.com/v1/albums/")))
 		         .body("albums[0].id", notNullValue())
 		         .body("albums[0].id", not(emptyOrNullString()))
+		         .body("albums[0].label", notNullValue())
+		         .time(lessThan(3000L))
 		         ;
 		         
 //		         String popularity =  response.getBody().jsonPath().getString("copyrights");
 
-		         System.out.println("albums: "+response.body().jsonPath().getString("albums[0].total_tracks"));
-		         System.out.println("artists: "+response.body().jsonPath().getString("albums[0].artists.external_urls.spotify"));
-
-		         System.out.println("artists: "+response.body().jsonPath().getString("albums[0].artists[0].name"));
+                 
 		         
 		         Assert.assertEquals(response.getStatusCode(), 200);
 		         Assert.assertEquals(response.body().jsonPath().getString("albums[0].album_type"), "album");
@@ -108,12 +107,14 @@ public class AlbumsTests extends BaseTest {
 		         
 		
 	}
+	
+	//Security testing
 
 	@Test(priority=3)
 	public void getSevevralAlbumsWithOutAuth(){
 		  
 		
-		Response response = AlbumsEndpoints.getSeveralAlbums("382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc");
+		Response response = AlbumsEndpoints.getSeveralAlbumsWithoutAccessToken("382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc");
 		         response.then().log().all();
 		         
 		         Assert.assertEquals(response.getStatusCode(), 401);
@@ -122,19 +123,28 @@ public class AlbumsTests extends BaseTest {
 		
 	}
 	
-//	@Test(priority=3)
-//	public void validateSeveralAlbumSchema() {
-//		
-//		Response response = AlbumsEndpoints.getSeveralAlbums(accessToken, severalAlbumsId);
-//		         response.then().log().all();
-//		         
-//		         response.then()
-//		         .body(matchesJsonSchemaInClasspath("schemas/severalalbums.json"));
-//		         
-//		         Assert.assertEquals(response.statusCode(), 200);
-//		         
-//		
-//	}
+//	Get Album Tracks
+	@Test(priority=4)
+	public void getAlbumTracks() {
+		
+		Response response = AlbumsEndpoints.getAlbumsTracks(getAlbumTrackId, accessToken);
+		         response.then()
+		         .body("items[0].artists.id", notNullValue())
+                 .body("items[0].id", notNullValue())
+                 .body("href", startsWith("https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGT"))
+                 .body("href", endsWithIgnoringCase("tracks?offset=0&limit=20"))
+                 .body("items[0].artists[0].name", equalToIgnoringCase("pitbull"))
+                 .body("items[0].artists[0].type", equalToIgnoringCase("artist"))
+                 .body("items[0].artists[0].id", equalToIgnoringCase("0TnOYISbd1XYRBk9myaseg"))
+                 .body("items[0].artists[0].href", equalTo("https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg"))
+                 .body("items[0].artists.name",contains("Pitbull","Sensato") )
+                 .body("items[0].artists.href", hasItem("https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg"))
+                 .body("items", hasSize(greaterThan(10)));
+		
+	}
+
+
+
 	
   	
 

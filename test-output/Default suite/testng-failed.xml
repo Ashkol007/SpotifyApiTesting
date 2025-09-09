@@ -5,8 +5,8 @@
     <classes>
       <class name="api.tests.AlbumsTests">
         <methods>
+          <include name="getAlbumTracks"/>
           <include name="generateToken"/>
-          <include name="validateSeveralAlbumSchema"/>
         </methods>
       </class> <!-- api.tests.AlbumsTests -->
     </classes>
