@@ -5,7 +5,7 @@
     <classes>
       <class name="api.tests.AlbumsTests">
         <methods>
-          <include name="getAlbumTracks"/>
+          <include name="getAlbumTracksPOJO"/>
           <include name="generateToken"/>
         </methods>
       </class> <!-- api.tests.AlbumsTests -->

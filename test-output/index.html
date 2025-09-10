@@ -50,7 +50,7 @@
               <ul>
                 <li>
                   <a href="#" panel-name="test-xml-Default_suite" class="navigator-link ">
-                    <span>C:\Users\dell\AppData\Local\Temp\testng-eclipse--1058059628\testng-customsuite.xml</span>
+                    <span>C:\Users\dell\AppData\Local\Temp\testng-eclipse--1673895348\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -60,7 +60,7 @@
                 </li>
                 <li>
                   <a href="#" panel-name="group-Default_suite" class="navigator-link ">
-                    <span>0 groups</span>
+                    <span>1 group</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -103,7 +103,7 @@
                     <div class="method-list-content passed suite-Default_suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Default_suite" title="api.tests.AlbumsTests" class="method navigator-link" hash-for-method="getAlbumTracks">getAlbumTracks</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Default_suite" title="api.tests.AlbumsTests" class="method navigator-link" hash-for-method="getAlbumTracksPOJO">getAlbumTracksPOJO</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_suite -->
@@ -126,9 +126,9 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="getAlbumTracks">
-                  </a> <!-- getAlbumTracks -->
-                  <span class="method-name">getAlbumTracks</span>
+                  <a name="getAlbumTracksPOJO">
+                  </a> <!-- getAlbumTracksPOJO -->
+                  <span class="method-name">getAlbumTracksPOJO</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -136,7 +136,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\dell\AppData\Local\Temp\testng-eclipse--1058059628\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\dell\AppData\Local\Temp\testng-eclipse--1673895348\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -147,7 +147,7 @@
     &lt;classes&gt;
       &lt;class name=&quot;api.tests.AlbumsTests&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;getAlbumTracks&quot;/&gt;
+          &lt;include name=&quot;getAlbumTracksPOJO&quot;/&gt;
         &lt;/methods&gt;
       &lt;/class&gt; &lt;!-- api.tests.AlbumsTests --&gt;
     &lt;/classes&gt;
@@ -173,6 +173,14 @@
             <span class="header-content">Groups for Default suite</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="test-group">
+              <span class="test-group-name">Functional</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">getAlbumTracksPOJO</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="times-Default_suite" class="panel">
@@ -191,14 +199,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'getAlbumTracks')
+data.setCell(0, 1, 'getAlbumTracksPOJO')
 data.setCell(0, 2, 'api.tests.AlbumsTests')
-data.setCell(0, 3, 1206);
+data.setCell(0, 3, 579);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 1 seconds</span>
+              <span class="suite-total-time">Total running time: 579 ms</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -213,7 +221,7 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">6 ignored methods</span>
+            <span class="header-content">8 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
@@ -221,15 +229,19 @@ return data;
               <div class="ignored-methods-div">
                 <span class="ignored-method-name">getSevevralAlbumsWithOutAuth</span>
                 <br/>
-                <span class="ignored-method-name">getSevevralAlbumsWithInvalidId</span>
+                <span class="ignored-method-name">getSevevralAlbums</span>
                 <br/>
                 <span class="ignored-method-name">getSevevralAlbumsWithEmptyAuth</span>
                 <br/>
-                <span class="ignored-method-name">getAlbumsUnauthorized</span>
+                <span class="ignored-method-name">getSevevralAlbumsWithInvalidId</span>
                 <br/>
-                <span class="ignored-method-name">getSevevralAlbums</span>
+                <span class="ignored-method-name">getAlbumTracks</span>
                 <br/>
                 <span class="ignored-method-name">getAlbums</span>
+                <br/>
+                <span class="ignored-method-name">getAlbumsUnauthorized</span>
+                <br/>
+                <span class="ignored-method-name">getAlbumTrackswithInvalidId</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -247,8 +259,8 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-suite before -->
               <div class="test-method">
-                <span class="method-name">getAlbumTracks</span>
-                <span class="method-start">66 ms</span>
+                <span class="method-name">getAlbumTracksPOJO</span>
+                <span class="method-start">45 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

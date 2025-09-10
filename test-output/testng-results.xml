@@ -2,19 +2,22 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-09-09T18:30:37 IST" name="Default suite" finished-at="2025-09-09T18:30:39 IST" duration-ms="1259">
+  <suite started-at="2025-09-10T18:08:37 IST" name="Default suite" finished-at="2025-09-10T18:08:37 IST" duration-ms="620">
     <groups>
+      <group name="Functional">
+        <method signature="AlbumsTests.getAlbumTracksPOJO()[pri:5, instance:api.tests.AlbumsTests@3ba348ca]" name="getAlbumTracksPOJO" class="api.tests.AlbumsTests"/>
+      </group> <!-- Functional -->
     </groups>
-    <test started-at="2025-09-09T18:30:37 IST" name="Default test" finished-at="2025-09-09T18:30:39 IST" duration-ms="1259">
+    <test started-at="2025-09-10T18:08:37 IST" name="Default test" finished-at="2025-09-10T18:08:37 IST" duration-ms="620">
       <class name="api.tests.AlbumsTests">
-        <test-method is-config="true" signature="generateToken()[pri:0, instance:api.tests.AlbumsTests@2d85fb64]" started-at="2025-09-09T18:30:37 IST" name="generateToken" finished-at="2025-09-09T18:30:37 IST" duration-ms="18" status="PASS">
+        <test-method is-config="true" signature="generateToken()[pri:0, instance:api.tests.AlbumsTests@3ba348ca]" started-at="2025-09-10T18:08:37 IST" name="generateToken" finished-at="2025-09-10T18:08:37 IST" duration-ms="12" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- generateToken -->
-        <test-method signature="getAlbumTracks()[pri:4, instance:api.tests.AlbumsTests@2d85fb64]" started-at="2025-09-09T18:30:37 IST" name="getAlbumTracks" finished-at="2025-09-09T18:30:39 IST" duration-ms="1206" status="PASS">
+        <test-method signature="getAlbumTracksPOJO()[pri:5, instance:api.tests.AlbumsTests@3ba348ca]" started-at="2025-09-10T18:08:37 IST" name="getAlbumTracksPOJO" finished-at="2025-09-10T18:08:37 IST" duration-ms="579" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getAlbumTracks -->
+        </test-method> <!-- getAlbumTracksPOJO -->
       </class> <!-- api.tests.AlbumsTests -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

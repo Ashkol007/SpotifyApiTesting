@@ -1,26 +1,40 @@
 package api.tests;
 
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.endsWithIgnoringCase;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
+
 import java.util.Arrays;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import api.endpoints.AlbumsEndpoints;
+import api.models.AlbumTracksResponse;
 import io.restassured.response.Response;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class AlbumsTests extends BaseTest {
 	
 	String accessToken = generateToken();
 	String severalAlbumsId = "382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo,2noRn2Aes5aoNVsU6iWThc";
 	String getAlbumTrackId = "4aawyAB9vmqN3uQ7FjRGTy";
-	
+	String invalidId = "0011invalid8899";
 	@Test(priority=1)
 	public void getAlbums() {
 		
 		
-		Response response = AlbumsEndpoints.getAlbums(generateToken());
+		Response response = AlbumsEndpoints.getAlbums(accessToken);
 		         response.then().log().all();
 		         
 		        response.then()
@@ -124,7 +138,7 @@ public class AlbumsTests extends BaseTest {
 	}
 	
 //	Get Album Tracks
-	@Test(priority=4)
+	@Test(priority=4,groups= {"Functional"})
 	public void getAlbumTracks() {
 		
 		Response response = AlbumsEndpoints.getAlbumsTracks(getAlbumTrackId, accessToken);
@@ -140,6 +154,63 @@ public class AlbumsTests extends BaseTest {
                  .body("items[0].artists.name",contains("Pitbull","Sensato") )
                  .body("items[0].artists.href", hasItem("https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg"))
                  .body("items", hasSize(greaterThan(10)));
+		         
+		         Assert.assertEquals(response.statusCode(), 200);
+		
+	}
+	
+	@Test(priority=4,groups= {"Negative"})
+    public void getAlbumTrackswithInvalidId() {
+		
+		Response response = AlbumsEndpoints.getAlbumsTracks(invalidId, accessToken);
+		         response.then()
+		         .body("error.status", equalTo(400))
+		         .body("error.message", equalToIgnoringCase("Invalid base62 id"));
+		         
+		         Assert.assertEquals(response.statusCode(), 400);
+		         Assert.assertEquals(response.body().jsonPath().getString("error.message"), "Invalid base62 id");
+		
+	}
+	
+	@Test(priority=5,groups= {"Functional"})
+	public void getAlbumTracksPOJO() {
+		
+		Response response = AlbumsEndpoints.getAlbumsTracks(getAlbumTrackId, accessToken);
+		                                                                   
+		   AlbumTracksResponse albumTracks =  response.then().extract().as(AlbumTracksResponse.class);
+		   	
+		   	   System.out.println("Album href: "+ albumTracks.getHref());
+			   System.out.println("Album limit: "+ albumTracks.getLimit());
+			   System.out.println("Album offset: "+ albumTracks.getOffset());
+			   System.out.println("Album total: "+ albumTracks.getTotal());
+			   
+			   System.out.println("First track id: "+ albumTracks.getItems().get(0).getId());
+			   System.out.println("First track name: "+ albumTracks.getItems().get(0).getName());
+			   
+			   System.out.println("First track first artist id: "+ albumTracks.getItems().get(0).getArtists().get(0).getId());
+			   System.out.println("First track first artist name: "+ albumTracks.getItems().get(0).getArtists().get(0).getName());
+			   
+			   System.out.println("First track second artist id: "+ albumTracks.getItems().get(0).getArtists().get(1).getId());
+			   System.out.println("First track second artist name: "+ albumTracks.getItems().get(0).getArtists().get(1).getName());
+			   
+			   System.out.println("First track available markets: "+ Arrays.toString(albumTracks.getItems().get(0).getAvailable_markets().toArray()));
+			   
+			   Assert.assertEquals(albumTracks.getHref(), "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks?offset=0&limit=20");
+			   Assert.assertTrue(albumTracks.getLimit() == 20);
+			   Assert.assertTrue(albumTracks.getOffset() == 0);
+			   Assert.assertTrue(albumTracks.getTotal() == 18);
+			   
+			   Assert.assertEquals(albumTracks.getItems().get(0).getId(), "6OmhkSOpvYBokMKQxpIGx2");
+			   Assert.assertEquals(albumTracks.getItems().get(0).getName(), "Global Warming (feat. Sensato)");
+			   
+			   Assert.assertEquals(albumTracks.getItems().get(0).getArtists().get(0).getId(), "0TnOYISbd1XYRBk9myaseg");
+			   Assert.assertEquals(albumTracks.getItems().get(0).getArtists().get(0).getName(), "Pitbull");
+			   Assert.assertTrue(albumTracks.getItems().get(0).getAvailable_markets().size() >10);
+			   Assert.assertTrue(albumTracks.getItems().get(0).getAvailable_markets().contains("AT"));
+                      		
+			   
+		         
+		         Assert.assertEquals(response.statusCode(), 200);
 		
 	}
 
